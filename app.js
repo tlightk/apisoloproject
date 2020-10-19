@@ -47,6 +47,7 @@ const typeDefs = gql`
   type Mutation {
     addMember(input: FamilyMembersInput): ReturnMessage
     deleteMember(first_name: String): ReturnMessage
+    updateMember(first_name: String, update: FamilyMembersInput): ReturnMessage
   }
 `;
 
@@ -82,6 +83,12 @@ resolvers = {
                 .where({first_name: args.first_name})
                 .del()
                 return { message: "Successfully deleted!"}
+        },
+        updateMember: async (parent, args) => {
+            await knex('xiong_family')
+            .where({first_name: args.first_name})
+            .update(args.update)
+            return { message: "Successfully updated!"}
         }
     }
 }
