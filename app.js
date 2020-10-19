@@ -25,7 +25,7 @@ const typeDefs = gql`
 
   type Query {
     member(first_name: String): FamilyMembers
-    familyNames: [FamilyMembers]
+    family: [FamilyMembers]
   }
 `;
 
@@ -41,16 +41,12 @@ resolvers = {
                     return name;
                 });
         },
-        familyNames: (parent, args) => {
+        family: (parent, args) => {
             return knex
             .select()
             .table("xiong_family")
             .then((members) => {
-                let names = []
-                for(let member of members) {
-                    names.push(member.first_name);
-                }
-                return names;
+                return members;
             })
         }
     }
