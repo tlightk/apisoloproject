@@ -1,5 +1,6 @@
 const { gql } = require("apollo-server");
 const { ApolloServer } = require("apollo-server");
+const { DEFAULT_DEPRECATION_REASON } = require("graphql");
 const knexfile = require("./knexfile");
 const knex = require('knex')({
     client: 'postgres',
@@ -23,9 +24,28 @@ const typeDefs = gql`
     dislikes: String
   }
 
+  type ReturnMessage {
+      message: String
+  }
+
+  input FamilyMembersInput {
+    id: Int
+    first_name: String
+    middle_name: String
+    age: Int
+    birthday: String
+    birthplace: String
+    likes: String
+    dislikes: String
+  }
+
   type Query {
     member(first_name: String): FamilyMembers
     family: [FamilyMembers]
+  }
+
+  type Mutation {
+    addMember(input: FamilyMembersInput): ReturnMessage
   }
 `;
 
@@ -48,6 +68,15 @@ resolvers = {
             .then((members) => {
                 return members;
             })
+        }
+    },
+    Mutation: {
+        addMember: async (parent, args) => {
+            await knex("xiong_family")
+            .insert(
+                args.input
+            )
+            return {message: "Successfully added a member!"}
         }
     }
 }
