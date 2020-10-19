@@ -101,34 +101,3 @@ server.listen(PORT, () => {
         `Running a GraphQL API server with Apollo at localhost:${PORT}/graphql`
     );
 });
-
-
-
-
-
-//console.log(xiongfamily);
-
-
-
-
-/*
-const express = require("express");
-const app = express();
-
-const xiongfamily = knex
-        .select()
-        .table("xiong_family")
-        .then((rows) => {
-            return rows;
-        });
-
-app.use(express.static("./"));
-
-app.get("/", (req, res) => {
-    res.send(xiongfamily);
-})
-
-app.listen(5000, () => {
-    console.log("Listening @ 5000");
-})
-*/
