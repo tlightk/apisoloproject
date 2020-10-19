@@ -9,8 +9,10 @@ const knex = require('knex')({
     }
   });
 
-const users = knex.select().table("users").
-then((rows) => {
+const users = knex
+.select()
+.table("users")
+.then((rows) => {
     console.log(rows);
 });
 
