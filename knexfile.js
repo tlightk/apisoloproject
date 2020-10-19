@@ -16,9 +16,9 @@ module.exports = {
   staging: {
     client: 'postgresql',
     connection: {
-      database: 'solo_api',
-      user:     'postgres',
-      password: 'wordpass1'
+      database: process.env.DB_USER,
+      user:     process.env.DB_PASS,
+      password: process.env.DB_NAME
     },
     pool: {
       min: 2,
@@ -32,9 +32,9 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'solo_api',
-      user:     'postgres',
-      password: 'wordpass1'
+      database: process.env.DB_USER,
+      user:     process.env.DB_PASS,
+      password: process.env.DB_NAME
     },
     pool: {
       min: 2,
