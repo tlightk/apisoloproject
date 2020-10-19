@@ -1,3 +1,5 @@
+const { gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
 const knexfile = require("./knexfile");
 const knex = require('knex')({
     client: 'postgres',
@@ -9,14 +11,14 @@ const knex = require('knex')({
     }
   });
 
-const users = knex
+const xiongfamily = knex
 .select()
-.table("users")
+.table("xiong_family")
 .then((rows) => {
-    console.log(rows);
+    return rows;
 });
 
-console.log(users);
+console.log(xiongfamily);
 
 const express = require("express");
 
@@ -25,7 +27,7 @@ const app = express();
 app.use(express.static("./"));
 
 app.get("/", (req, res) => {
-    res.send("Hello world");
+    res.send(xiongfamily);
 })
 
 app.listen(5000, () => {
