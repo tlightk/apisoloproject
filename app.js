@@ -46,6 +46,7 @@ const typeDefs = gql`
 
   type Mutation {
     addMember(input: FamilyMembersInput): ReturnMessage
+    deleteMember(first_name: String): ReturnMessage
   }
 `;
 
@@ -63,20 +64,24 @@ resolvers = {
         },
         family: (parent, args) => {
             return knex
-            .select()
-            .table("xiong_family")
-            .then((members) => {
-                return members;
-            })
+                .select()
+                .table("xiong_family")
+                .then((members) => {
+                    return members;
+                })
         }
     },
     Mutation: {
         addMember: async (parent, args) => {
             await knex("xiong_family")
-            .insert(
-                args.input
-            )
-            return {message: "Successfully added a member!"}
+                .insert(args.input)
+            return { message: "Successfully added a member!" }
+        },
+        deleteMember: async (parent, args) => {
+            await knex('xiong_family')
+                .where({first_name: args.first_name})
+                .del()
+                return { message: "Successfully deleted!"}
         }
     }
 }
